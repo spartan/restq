@@ -56,6 +56,15 @@
     },
     "scripts": {
     },
+    "extra": {
+        "spartan": {
+            "install": {
+                "commands": [
+                    "__DIR__ . '/../vendor/spartan/restq/src/Command'"
+                ]
+            }
+        }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }
