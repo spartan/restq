@@ -29,7 +29,7 @@ class FakeInt extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        Command\Config\Env::load();
+        self::loadEnv();
 
         $value     = $input->getArgument('int');
         $transform = new \Spartan\Rest\Transform\FakeInt();
