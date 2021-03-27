@@ -1,4 +1,11 @@
 # Changelog
+### [0.1.2](https://github.com/spartan/restq/compare/v0.1.1...v0.1.2) (2021-03-27)
+
+
+### Fixes
+
+* commands ([60101c2](https://github.com/spartan/restq/commit/60101c2c132a50e96f679b516c40315c608f686a))
+
 ### [0.1.1](https://github.com/spartan/restq/compare/v0.1.0...v0.1.1) (2021-03-07)
 
 
