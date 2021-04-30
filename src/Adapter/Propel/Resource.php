@@ -317,7 +317,7 @@ class Resource extends \Spartan\Rest\Resource
         $criteria = new Criteria();
         foreach ($payload as $column => $value) {
             if ($this->isAttributeObject($column)) {
-                $value = (is_array($value) ? json_encode($value) : $value) ?: '{}';
+                $value = addslashes((is_array($value) ? json_encode($value) : $value) ?: '{}');
                 $criteria->add(
                     "{$tableName}.{$column}",
                     "JSON_MERGE_PATCH(COALESCE({$column}, '{}'), '{$value}')",
