@@ -1,4 +1,11 @@
 # Changelog
+### [0.1.3](https://github.com/spartan/restq/compare/v0.1.2...v0.1.3) (2021-04-30)
+
+
+### Fixes
+
+* propel adapter json update ([4394d71](https://github.com/spartan/restq/commit/4394d7130f398d3b587a39e7e640e5d7f6da85c8))
+
 ### [0.1.2](https://github.com/spartan/restq/compare/v0.1.1...v0.1.2) (2021-03-27)
 
 
