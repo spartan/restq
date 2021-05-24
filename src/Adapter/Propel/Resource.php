@@ -50,17 +50,18 @@ class Resource extends \Spartan\Rest\Resource
     protected static int $joinIndex = 0;
 
     protected static array $argumentsMap = [
-        'limit'    => 'Spartan\Rest\Adapter\Propel\Argument\Limit',
-        'paginate' => 'Spartan\Rest\Adapter\Propel\Argument\Paginate',
-        'filtered' => 'Spartan\Rest\Adapter\Propel\Argument\Filtered',
-        'total'    => 'Spartan\Rest\Adapter\Propel\Argument\Total',
-        'sort'     => 'Spartan\Rest\Adapter\Propel\Argument\Sort',
-        'first'    => 'Spartan\Rest\Adapter\Propel\Argument\First',
-        'last'     => 'Spartan\Rest\Adapter\Propel\Argument\Last',
-        'criteria' => 'Spartan\Rest\Adapter\Propel\Argument\Criteria',
-        'exclude'  => 'Spartan\Rest\Adapter\Propel\Argument\Exclude',
-        'distinct' => 'Spartan\Rest\Adapter\Propel\Argument\Distinct',
-        'orGroup'  => 'Spartan\Rest\Adapter\Propel\Argument\OrGroup',
+        'limit'     => 'Spartan\Rest\Adapter\Propel\Argument\Limit',
+        'paginate'  => 'Spartan\Rest\Adapter\Propel\Argument\Paginate',
+        'filtered'  => 'Spartan\Rest\Adapter\Propel\Argument\Filtered',
+        'total'     => 'Spartan\Rest\Adapter\Propel\Argument\Total',
+        'sort'      => 'Spartan\Rest\Adapter\Propel\Argument\Sort',
+        'first'     => 'Spartan\Rest\Adapter\Propel\Argument\First',
+        'last'      => 'Spartan\Rest\Adapter\Propel\Argument\Last',
+        'criteria'  => 'Spartan\Rest\Adapter\Propel\Argument\Criteria',
+        'exclude'   => 'Spartan\Rest\Adapter\Propel\Argument\Exclude',
+        'distinct'  => 'Spartan\Rest\Adapter\Propel\Argument\Distinct',
+        'orGroup'   => 'Spartan\Rest\Adapter\Propel\Argument\OrGroup',
+        'useObject' => 'Spartan\Rest\Adapter\Propel\Argument\UseObject',
     ];
 
     protected static array $computed = [];
@@ -125,9 +126,15 @@ class Resource extends \Spartan\Rest\Resource
      */
     public function executeSearch(array $payload, array &$input): array
     {
-        $formatter = count($this->query()->getJoins())
-            ? ModelCriteria::FORMAT_OBJECT
-            : ModelCriteria::FORMAT_ON_DEMAND;
+        if ($input['args'][':useObject'] ?? false) {
+            $formatter = count($this->query()->getJoins())
+                ? ModelCriteria::FORMAT_OBJECT
+                : ModelCriteria::FORMAT_ON_DEMAND;
+        } else {
+            $formatter = count($this->query()->getJoins())
+                ? ModelCriteria::FORMAT_ARRAY
+                : ModelCriteria::FORMAT_ON_DEMAND;
+        }
 
         if ($this->query()->getLimit() > 0 && count($this->query()->getJoins())) {
             if ($this->fixPaginationWithRelationsOnQuery() === false) {
@@ -136,13 +143,56 @@ class Resource extends \Spartan\Rest\Resource
             }
         }
 
-        $result = $this->query()
-                       ->setFormatter($formatter)
-                       ->find()
-                       ->toArray(null, false, TableMap::TYPE_FIELDNAME);
+        if ($input['args'][':useObject'] ?? false) {
+            $result = $this->query()
+                           ->setFormatter($formatter)
+                           ->find()
+                           ->toArray(null, false, TableMap::TYPE_FIELDNAME);
+        } else {
+            $result = self::convertFieldName(
+                $this->query()
+                     ->setFormatter($formatter)
+                     ->find()
+                     ->toArray()
+            );
+        }
 
         foreach ($result as &$datum) {
             $datum = $this->processAttrOnResponse($datum, $input);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Convert CamelCase to under_score
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    public static function convertFieldName(array $data)
+    {
+        $filter = new \Laminas\Filter\Word\CamelCaseToUnderscore();
+        $result = [];
+
+        if (isset($data[0])) {
+            foreach ($data as $datum) {
+                $result[] = self::convertFieldName($datum);
+            }
+        } else {
+            foreach ($data as $fieldName => $fieldValue) {
+                /*
+                 * Cleanup a stupid Propel issue returning [[]] on empty array result
+                 */
+                if ($fieldValue == [[]]) {
+                    $fieldValue = [];
+                }
+
+                $result[strtolower($filter->filter($fieldName))] = is_array($fieldValue)
+                    ? self::convertFieldName($fieldValue)
+                    : $fieldValue;
+            }
         }
 
         return $result;
@@ -786,7 +836,9 @@ class Resource extends \Spartan\Rest\Resource
                             : json_decode($attributes[$attrName], true)[$subAttrName] ?? null;
                     }
                 } elseif ($computedColumn = array_search($computedAlias, $this->computedMap())) {
-                    $computed[$computedColumn] = $this->{'computed' . $this->propelName($computedColumn)}($attributes);
+                    if ($attributes) {
+                        $computed[$computedColumn] = $this->{'computed' . $this->propelName($computedColumn)}($attributes);
+                    }
                 }
             }
         }
@@ -989,6 +1041,10 @@ class Resource extends \Spartan\Rest\Resource
                 } else {
                     $aliases[$def['alias']] = $name;
                 }
+            } elseif (isset($def['propel'])) {
+                $filter = new \Laminas\Filter\Word\CamelCaseToUnderscore();
+
+                $aliases[strtolower($filter->filter($def['propel']))] = $name;
             }
         }
 
