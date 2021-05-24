@@ -1,4 +1,11 @@
 # Changelog
+### [0.1.4](https://github.com/spartan/restq/compare/v0.1.3...v0.1.4) (2021-05-24)
+
+
+### New
+
+* improved results using arrays instead of objects + useObject argument ([a5bfcb0](https://github.com/spartan/restq/commit/a5bfcb05f427f04a6c68d6cfa81b94d9c16e3cf7))
+
 ### [0.1.3](https://github.com/spartan/restq/compare/v0.1.2...v0.1.3) (2021-04-30)
 
 
