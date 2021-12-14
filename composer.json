@@ -21,16 +21,9 @@
         "email": "support@spartanphp.com",
         "docs": "https://docs.spartanphp.com"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/rentpost/Propel2"
-        }
-    ],
     "require": {
         "php": ">=7.4",
         "jenssegers/optimus": "^1.0",
-        "rentpost/propel": "dev-master",
         "spartan/db": "^0.1.0",
         "swaggest/json-schema": "^0.12.24",
         "symfony/inflector": "^5.1",
@@ -53,6 +46,10 @@
     },
     "config": {
         "sort-packages": true
+    },
+    "suggest": {
+        "rentpost/propel": "Add propel support. Use repository VCS: https://github.com/rentpost/Propel2",
+        "propep/propel": "Add propel support: (propel/propel: 2.0.0-beta1)"
     },
     "scripts": {
     },
