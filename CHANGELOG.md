@@ -1,4 +1,11 @@
 # Changelog
+### [0.1.5](https://github.com/spartan/restq/compare/v0.1.4...v0.1.5) (2021-12-14)
+
+
+### Changes
+
+* remove deps on rentpost/propel ([154068d](https://github.com/spartan/restq/commit/154068d8ec2b435460a0ea4c290d79fd142506c2))
+
 ### [0.1.4](https://github.com/spartan/restq/compare/v0.1.3...v0.1.4) (2021-05-24)
 
 
