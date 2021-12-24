@@ -1,4 +1,11 @@
 # Changelog
+### [0.1.6](https://github.com/spartan/restq/compare/v0.1.5...v0.1.6) (2021-12-24)
+
+
+### New
+
+* recursive transform on json objects ([283b3c4](https://github.com/spartan/restq/commit/283b3c484cdae542860ce545e5bd237320e4f875))
+
 ### [0.1.5](https://github.com/spartan/restq/compare/v0.1.4...v0.1.5) (2021-12-14)
 
 
