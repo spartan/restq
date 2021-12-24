@@ -734,6 +734,12 @@ abstract class Resource implements ResourceInterface
 
         if (isset($definition['type']) && ($definition['type'] == 'object' || $definition['type'][0] == 'object') && !is_array($value)) {
             $value = json_decode($value, true);
+            foreach ($value as $key => $val) {
+                // safe check to avoid issues on renaming keys
+                if (isset($definition['properties'][$key])) {
+                    $value[$key] = self::transformResponse($definition['properties'][$key], $val);
+                }
+            }
         }
 
         return $value;
@@ -802,6 +808,13 @@ abstract class Resource implements ResourceInterface
         }
 
         if (isset($definition['type']) && $definition['type'] == 'object') {
+            foreach ($value as $key => $val) {
+                // safe check to avoid issues on renaming keys
+                if (isset($definition['properties'][$key])) {
+                    $value[$key] = self::transformRequest($definition['properties'][$key], $val);
+                }
+            }
+
             $value = json_encode($value, JSON_UNESCAPED_UNICODE);
         }
 
