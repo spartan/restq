@@ -1,4 +1,11 @@
 # Changelog
+### [0.1.7](https://github.com/spartan/restq/compare/v0.1.6...v0.1.7) (2022-01-10)
+
+
+### Fixes
+
+* add default values to object type properties ([74be004](https://github.com/spartan/restq/commit/74be004e17253d7a643d80b5bcd22030d95f3c69))
+
 ### [0.1.6](https://github.com/spartan/restq/compare/v0.1.5...v0.1.6) (2021-12-24)
 
 
