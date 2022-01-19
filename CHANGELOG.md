@@ -1,4 +1,11 @@
 # Changelog
+### [0.1.8](https://github.com/spartan/restq/compare/v0.1.7...v0.1.8) (2022-01-19)
+
+
+### Changes
+
+* allow attr selection on reference without join ([409844e](https://github.com/spartan/restq/commit/409844ed8d30b26cec25228f5a15758dd8641738))
+
 ### [0.1.7](https://github.com/spartan/restq/compare/v0.1.6...v0.1.7) (2022-01-10)
 
 
