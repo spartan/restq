@@ -427,7 +427,7 @@ class Resource extends \Spartan\Rest\Resource
             throw new \InvalidArgumentException('Missing attribute list');
         }
 
-        foreach ($input['attr'] as $name) {
+        foreach ($input['attr'] as $index => $name) {
             if ($this->isAttribute($name)) {
                 $this->withAttribute($name, $input);
             } elseif ($this->isComputed($name)) {
@@ -442,6 +442,8 @@ class Resource extends \Spartan\Rest\Resource
                     // json
                     $input['attr'][] = $realName;
                 }
+            } elseif ($this->isReference($name)) {
+                $input['attr'][$index] = static::SCHEMA['properties'][$name]['column'];
             } else {
                 throw new \InvalidArgumentException("Unknown attribute `{$name}`");
             }
