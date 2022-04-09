@@ -1,4 +1,11 @@
 # Changelog
+### [0.1.9](https://github.com/spartan/restq/compare/v0.1.8...v0.1.9) (2022-04-09)
+
+
+### Fixes
+
+* avoid double-encoding on deep nested json attributes ([858edb8](https://github.com/spartan/restq/commit/858edb88eda2d23d25909614f77e6a115ea2ac99))
+
 ### [0.1.8](https://github.com/spartan/restq/compare/v0.1.7...v0.1.8) (2022-01-19)
 
 
