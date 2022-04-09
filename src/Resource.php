@@ -810,7 +810,7 @@ abstract class Resource implements ResourceInterface
         if (isset($definition['type']) && $definition['type'] == 'object') {
             foreach ($value as $key => $val) {
                 // safe check to avoid issues on renaming keys
-                if (isset($definition['properties'][$key])) {
+                if (isset($definition['properties'][$key]) && $definition['properties'][$key]['type'] != 'object') {
                     $value[$key] = self::transformRequest($definition['properties'][$key], $val);
                 }
             }
