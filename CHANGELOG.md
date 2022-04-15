@@ -1,4 +1,11 @@
 # Changelog
+### [0.1.10](https://github.com/spartan/restq/compare/v0.1.9...v0.1.10) (2022-04-15)
+
+
+### Fixes
+
+* improve json object recursive process ([5c7da3d](https://github.com/spartan/restq/commit/5c7da3d69a7c2d786d130f2cfbfdc46e61f95a3a))
+
 ### [0.1.9](https://github.com/spartan/restq/compare/v0.1.8...v0.1.9) (2022-04-09)
 
 
