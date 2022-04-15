@@ -750,11 +750,11 @@ abstract class Resource implements ResourceInterface
      *
      * @param array $definition
      * @param       $value
+     * @param bool  $isMain
      *
      * @return mixed
-     * @throws \InvalidArgumentException
      */
-    public static function transformRequest(array $definition, $value)
+    public static function transformRequest(array $definition, $value, bool $isMain = true)
     {
         // don't transform NULL
         if ($value === null) {
@@ -810,12 +810,15 @@ abstract class Resource implements ResourceInterface
         if (isset($definition['type']) && $definition['type'] == 'object') {
             foreach ($value as $key => $val) {
                 // safe check to avoid issues on renaming keys
-                if (isset($definition['properties'][$key]) && $definition['properties'][$key]['type'] != 'object') {
-                    $value[$key] = self::transformRequest($definition['properties'][$key], $val);
+                if (isset($definition['properties'][$key])) {
+                    $value[$key] = self::transformRequest($definition['properties'][$key], $val, false);
                 }
             }
 
-            $value = json_encode($value, JSON_UNESCAPED_UNICODE);
+            // only on "main" iteration aka last step we will json_encode the value
+            if ($isMain) {
+                $value = json_encode($value, JSON_UNESCAPED_UNICODE);
+            }
         }
 
         return $value;
