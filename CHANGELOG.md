@@ -1,4 +1,11 @@
 # Changelog
+### [0.1.11](https://github.com/spartan/restq/compare/v0.1.10...v0.1.11) (2022-12-09)
+
+
+### New
+
+* add transform:secret class ([382c34f](https://github.com/spartan/restq/commit/382c34f740aecaa1a5c5d0e0847ce8e0335df7a5))
+
 ### [0.1.10](https://github.com/spartan/restq/compare/v0.1.9...v0.1.10) (2022-04-15)
 
 
