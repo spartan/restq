@@ -46,6 +46,7 @@ abstract class Resource implements ResourceInterface
         'json'     => 'Spartan\Rest\Transform\Json',
         'password' => 'Spartan\Rest\Transform\Password',
         'crypt'    => 'Spartan\Rest\Transform\Crypt',
+        'secret'   => 'Spartan\Rest\Transform\Secret',
     ];
 
     protected ?ServerRequestInterface $request;
