@@ -1,4 +1,11 @@
 # Changelog
+### [0.1.12](https://github.com/spartan/restq/compare/v0.1.11...v0.1.12) (2024-04-29)
+
+
+### Changes
+
+* upgrade to php 8.1 and propel 2.0.0-beta2 ([0077931](https://github.com/spartan/restq/commit/0077931f95ae70a060e1b55d2c4539d65d4cb41b))
+
 ### [0.1.11](https://github.com/spartan/restq/compare/v0.1.10...v0.1.11) (2022-12-09)
 
 
