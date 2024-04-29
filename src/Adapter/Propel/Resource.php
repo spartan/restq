@@ -603,7 +603,7 @@ class Resource extends \Spartan\Rest\Resource
     public function withReference(string $name, array &$data, Resource $resource, ModelCriteria $query)
     {
         $propelName = $resource::SCHEMA['properties'][$name]['propel']
-            ?? $data['use']; // hack for multi-references
+                      ?? $data['use']; // hack for multi-references
         $joinIndex  = self::$joinIndex;
         $joinType   = isset($data['args']) && !isset($data['args'][':optional'])
             ? Criteria::INNER_JOIN
@@ -816,7 +816,7 @@ class Resource extends \Spartan\Rest\Resource
                         $value = $reference->processAttrOnResponse(['id' => $value], ['attr' => ['id']])['id'] ?? null;
                     }
                 }
-            } elseif ($this->isReferenceColumn($attribute)) { // ex: player_id
+            } elseif ($this->isReferenceColumn($attribute)) {      // ex: player_id
                 $realAttribute = $this->referenceName($attribute); // ex: player
                 $reference     = $this->referenceObject($realAttribute);
                 if ($value !== null) {
@@ -828,7 +828,7 @@ class Resource extends \Spartan\Rest\Resource
         }
 
         if ($this->ignoreComputed === false) {
-            foreach (self::$computed as $computedAlias) {
+            foreach ($this->computedMap() as $name => $computedAlias) {
                 if (strpos($computedAlias, ':')) {
                     [$schemaId, $attrFullName] = explode('|', $computedAlias);
                     if ($schemaId == static::SCHEMA['$id']) {
@@ -837,10 +837,8 @@ class Resource extends \Spartan\Rest\Resource
                             ? $attributes[$attrName][$subAttrName] ?? null
                             : json_decode($attributes[$attrName], true)[$subAttrName] ?? null;
                     }
-                } elseif ($computedColumn = array_search($computedAlias, $this->computedMap())) {
-                    if ($attributes) {
-                        $computed[$computedColumn] = $this->{'computed' . $this->propelName($computedColumn)}($attributes);
-                    }
+                } elseif (in_array($name, $input['attr'])) {
+                    $computed[$name] = $this->{'computed' . $this->propelName($name)}($attributes);
                 }
             }
         }
@@ -979,17 +977,15 @@ class Resource extends \Spartan\Rest\Resource
      */
     public function referenceColumnMap(): array
     {
-        static $map;
+        $map = [];
 
-        if ($map === null) {
-            foreach (static::SCHEMA['properties'] as $name => $definition) {
-                if (isset($definition['column'])) {
-                    $map[$definition['column']] = $name;
-                }
+        foreach (static::SCHEMA['properties'] as $name => $definition) {
+            if (isset($definition['column'])) {
+                $map[$definition['column']] = $name;
             }
         }
 
-        return $map ?: [];
+        return $map;
     }
 
     /**
@@ -1034,7 +1030,7 @@ class Resource extends \Spartan\Rest\Resource
      */
     public function aliases(): array
     {
-        static $aliases = [];
+        $aliases = [];
 
         foreach (static::SCHEMA['properties'] as $name => $def) {
             if (isset($def['alias'])) {
@@ -1063,13 +1059,13 @@ class Resource extends \Spartan\Rest\Resource
     public function propelName(string $name): string
     {
         return static::SCHEMA['properties'][$name]['name'] ??
-            preg_replace_callback(
-                '/(_[a-z]{1})/',
-                function ($value) {
-                    return strtoupper($value[0][1]);
-                },
-                ucfirst($name)
-            );
+               preg_replace_callback(
+                   '/(_[a-z]{1})/',
+                   function ($value) {
+                       return strtoupper($value[0][1]);
+                   },
+                   ucfirst($name)
+               );
     }
 
     /**
@@ -1079,17 +1075,15 @@ class Resource extends \Spartan\Rest\Resource
      */
     public function computedMap(): array
     {
-        static $map;
+        $map = [];
 
-        if ($map === null) {
-            foreach (static::SCHEMA['properties'] as $name => $def) {
-                if (isset($def['computed'])) {
-                    $map[$name] = $def['computed'];
-                }
+        foreach (static::SCHEMA['properties'] as $name => $def) {
+            if (isset($def['computed'])) {
+                $map[$name] = $def['computed'];
             }
         }
 
-        return $map ?: [];
+        return $map;
     }
 
     /**

@@ -830,13 +830,11 @@ abstract class Resource implements ResourceInterface
      */
     public function defaults(): array
     {
-        static $defaults;
+        $defaults = [];
 
-        if ($defaults === null) {
-            foreach (static::SCHEMA['properties'] as $name => $definition) {
-                if (isset($definition['default'])) {
-                    $defaults[$name] = $definition['default'];
-                }
+        foreach (static::SCHEMA['properties'] as $name => $definition) {
+            if (isset($definition['default'])) {
+                $defaults[$name] = $definition['default'];
             }
         }
 
