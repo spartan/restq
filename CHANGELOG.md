@@ -1,4 +1,11 @@
 # Changelog
+### [0.1.13](https://github.com/spartan/restq/compare/v0.1.12...v0.1.13) (2024-04-30)
+
+
+### Changes
+
+* allow laminas-code v4.0 in deps ([0747802](https://github.com/spartan/restq/commit/074780269045a43db4b7a19f6fefd4557a747504))
+
 ### [0.1.12](https://github.com/spartan/restq/compare/v0.1.11...v0.1.12) (2024-04-29)
 
 
