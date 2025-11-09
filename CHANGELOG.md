@@ -1,4 +1,11 @@
 # Changelog
+### [0.1.14](https://github.com/spartan/restq/compare/v0.1.13...v0.1.14) (2025-11-09)
+
+
+### Fixes
+
+* apply transform recursively on sub-objects ([4140ac7](https://github.com/spartan/restq/commit/4140ac7f69087056856b8a20acafa12ed04070f1))
+
 ### [0.1.13](https://github.com/spartan/restq/compare/v0.1.12...v0.1.13) (2024-04-30)
 
 
