@@ -733,8 +733,11 @@ abstract class Resource implements ResourceInterface
             $value = (new $transformClass($definition))->response($value);
         }
 
-        if (isset($definition['type']) && ($definition['type'] == 'object' || $definition['type'][0] == 'object') && !is_array($value)) {
-            $value = json_decode($value, true) + ($definition['default'] ?? []);
+        if (isset($definition['type']) && ($definition['type'] == 'object' || $definition['type'][0] == 'object')) {
+            if (!is_array($value)) {
+                $value = json_decode($value, true) + ($definition['default'] ?? []);
+            }
+
             foreach ($value as $key => $val) {
                 // safe check to avoid issues on renaming keys
                 if (isset($definition['properties'][$key])) {
