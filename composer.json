@@ -24,7 +24,7 @@
     "require": {
         "php": ">=7.4",
         "jenssegers/optimus": "^1.0",
-        "spartan/db": "^0.1.0",
+        "spartan/db": "^0.1.0|^0.2.0",
         "swaggest/json-schema": "^0.12.24",
         "symfony/inflector": "^5.1",
         "vlucas/phpdotenv": "^4.0",
