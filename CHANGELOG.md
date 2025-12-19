@@ -1,4 +1,11 @@
 # Changelog
+### [0.1.15](https://github.com/spartan/restq/compare/v0.1.14...v0.1.15) (2025-12-19)
+
+
+### Changes
+
+* accept spartan/db:0.2 ([7571b8b](https://github.com/spartan/restq/commit/7571b8b8a34cf8f0ba564030a53bcbb88d0c0b7d))
+
 ### [0.1.14](https://github.com/spartan/restq/compare/v0.1.13...v0.1.14) (2025-11-09)
 
 
